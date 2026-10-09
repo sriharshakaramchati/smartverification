@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SmartVerification - Sandbox app</title><link rel="icon" href="favicon.svg">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap">
+<style>
+:root{--ink:#14231c;--green:#165a38;--lime:#c9f47c;--line:#dce3dc;--paper:#f7f9f5;--mute:#657065;--red:#b42318;--amber:#b7791f}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 'DM Sans',sans-serif}
+h1,h2,h3{font-family:Manrope,sans-serif;letter-spacing:-.8px;margin:0 0 8px;line-height:1.15}h1{font-size:28px}h2{font-size:22px}h3{font-size:16px;letter-spacing:-.2px}
+a{color:var(--green)}button,input,select,textarea{font:inherit}
+.sb{background:var(--ink);color:#c5d0c5;font-size:12px;padding:6px 14px;display:flex;gap:10px;justify-content:space-between;align-items:center}.sb b{color:var(--lime)}.sb button{background:none;border:1px solid #4b5b50;color:#c5d0c5;border-radius:4px;font-size:11px;padding:2px 8px;cursor:pointer}
+.logo{font-family:Manrope,sans-serif;font-weight:800;font-size:18px;letter-spacing:-1px;color:var(--ink);text-decoration:none}.logo span{font-weight:500}.logo b{color:var(--green);margin-left:4px}
+.wrap{max-width:440px;margin:0 auto;padding:18px 18px 60px}.top{display:flex;justify-content:space-between;align-items:center;padding:6px 0 18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:20px;margin-bottom:14px;position:relative}.card.lime:before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:var(--lime);border-radius:10px 10px 0 0}
+.btn{display:flex;width:100%;justify-content:center;align-items:center;gap:8px;background:var(--green);color:#fff;border:0;border-radius:6px;padding:14px 18px;font-weight:600;cursor:pointer;text-decoration:none;font-size:15px}.btn:hover{background:#103e29}.btn:disabled{opacity:.5;cursor:default}
+.btn.alt{background:#fff;color:var(--green);border:1px solid var(--green)}.btn.sm{width:auto;padding:8px 14px;font-size:13px;display:inline-flex}.btn.ghost{background:none;color:var(--green);border:1px solid var(--line)}
+label{display:block;font-size:13px;font-weight:600;margin:14px 0 6px}input,select,textarea{width:100%;border:1px solid #c6d0c6;border-radius:6px;padding:12px;background:#fff;color:var(--ink)}input:focus,select:focus,textarea:focus{outline:2px solid var(--lime);border-color:var(--green)}
+.hint{font-size:12px;color:var(--mute);margin-top:6px}.err{font-size:13px;color:var(--red);margin-top:8px}.ok{color:var(--green)}
+.steps{display:flex;gap:5px;margin-bottom:18px}.steps i{flex:1;height:4px;border-radius:2px;background:var(--line)}.steps i.on{background:var(--green)}
+.emp{display:flex;gap:12px;align-items:center;margin-bottom:14px}.av{width:48px;height:48px;border-radius:10px;background:var(--green);color:var(--lime);font-family:Manrope;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:18px;flex:none}.av.r{border-radius:50%;background:#e9eee5;color:var(--green)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}.chip{font-size:12px;background:#eef7e9;color:var(--green);padding:4px 9px;border-radius:99px}
+.prog{height:8px;border-radius:5px;background:var(--line);overflow:hidden;margin:10px 0 4px}.prog i{display:block;height:100%;background:var(--green);transition:width .4s}
+.row{display:flex;align-items:center;gap:12px;padding:14px 0;border-top:1px solid var(--line);cursor:pointer}.row:first-of-type{border-top:0}.row .m{flex:1;min-width:0}.row b{display:block;font-size:15px}.row small{color:var(--mute);font-size:12px}
+.pv{width:40px;height:40px;border-radius:9px;color:#fff;font-weight:800;font-family:Manrope;display:flex;align-items:center;justify-content:center;flex:none;font-size:15px}
+.st{font-size:11px;font-weight:700;padding:4px 9px;border-radius:99px;white-space:nowrap}.st.ns{background:#f0f1ed;color:#6a7066}.st.dn{background:#e3f4d8;color:var(--green)}
+.pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:99px}.p-g{background:#e3f4d8;color:#165a38}.p-y{background:#fdf0cf;color:#8a5a00}.p-r{background:#fde4e1;color:#b42318}.p-n{background:#eef0ec;color:#7a8179}
+.modal{position:fixed;inset:0;background:#0b1510b8;display:flex;align-items:flex-end;justify-content:center;z-index:9}.sheet{background:#fff;width:100%;max-width:440px;border-radius:16px 16px 0 0;padding:22px 20px 28px}
+.ln{display:flex;gap:10px;font-size:14px;padding:7px 0;color:#9aa49a}.ln.on{color:var(--ink)}.ln.d{color:var(--green)}.ln u{text-decoration:none;width:18px}
+code{font-family:ui-monospace,monospace;font-size:12px;background:#eef2ec;padding:2px 6px;border-radius:4px;word-break:break-all}
+.big{font-size:56px;text-align:center}.center{text-align:center}.lnk{background:none;border:0;color:var(--green);text-decoration:underline;cursor:pointer;padding:0;font-size:13px}
+.hub a.btn{margin-top:10px}.cred{background:#f1f5ee;border:1px dashed #b8c8b0;border-radius:8px;padding:12px;font-size:14px;margin-top:10px}
+/* admin */
+.adm{display:flex;min-height:calc(100vh - 30px)}.side{width:210px;background:#fff;border-right:1px solid var(--line);padding:18px 14px;flex:none}.side a.n{display:block;padding:9px 12px;border-radius:6px;color:var(--ink);text-decoration:none;font-size:14px;margin-top:4px}.side a.n.on{background:#eef7e9;color:var(--green);font-weight:700}
+.main{flex:1;padding:24px 28px;min-width:0}.bar{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}.bar input,.bar select{width:auto;flex:1;min-width:140px}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden;font-size:14px}th{text-align:left;font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:var(--mute);padding:10px 12px;background:#f3f6f0}td{padding:11px 12px;border-top:1px solid var(--line);vertical-align:middle}tr.cl{cursor:pointer}tr.cl:hover{background:#fafcf8}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:14px 0}.kpi .card{margin:0;padding:16px}.kpi b{font-family:Manrope;font-size:26px;display:block}.kpi span{font-size:12px;color:var(--mute)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}.res{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--line);align-items:flex-start}.res .m{flex:1}.res small{color:var(--mute);display:block}
+.photo{width:84px;height:104px;border-radius:8px;background:linear-gradient(160deg,#e9eee5,#cfdcc7);display:flex;align-items:center;justify-content:center;font:800 34px Manrope;color:var(--green);flex:none}
+.toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:8px;font-size:14px;z-index:20;max-width:90vw}
+@media(max-width:800px){.adm{flex-direction:column}.side{width:auto;display:flex;gap:6px;overflow-x:auto;padding:10px;border-right:0;border-bottom:1px solid var(--line)}.side .logo{display:none}.side a.n{white-space:nowrap;margin:0}.main{padding:16px 14px}.two{grid-template-columns:1fr}.hide-s{display:none}table{font-size:13px}td,th{padding:9px 8px}}
+@media print{.sb,.side,.noprint,.toast{display:none!important}.main{padding:0}.adm{display:block}body{background:#fff}}
+</style></head><body>
+<div class="sb"><span><b>SANDBOX</b> &middot; providers are simulated, no real data is read or stored on a server</span><button data-act="reset">Reset demo</button></div>
+<div id="app"></div><div id="modal"></div><div id="toast"></div>
+<script>
+const KEY='sv_demo_v2',COST=1;
+const PROV={
+ uber:{n:'Uber',c:'#111',p:'Current address',d:'Your recent trip pickup/drop-off area',u:'https://m.uber.com/'},
+ swiggy:{n:'Swiggy',c:'#fc8019',p:'Current address',d:'Your latest delivery address',u:'https://www.swiggy.com/'},
+ epfo:{n:'EPFO passbook',c:'#1d4ed8',p:'Employment history',d:'Employers and tenure from your PF passbook',u:'https://passbook.epfindia.gov.in/'},
+ digilocker:{n:'DigiLocker',c:'#2563eb',p:'Education certificate',d:'Degree / marksheet issued to your DigiLocker',u:'https://www.digilocker.gov.in/'},
+ linkedin:{n:'LinkedIn',c:'#0a66c2',p:'Current job title',d:'Your current role and company',u:'https://www.linkedin.com/'}};
+const CHK={identity:'Identity',court:'Court records',education:'Education',employment:'Employment'};
+const SRC={identity:'DigiLocker / Aadhaar eKYC',court:'eCourts + FIR index',education:'DigiLocker certificate proof',employment:'EPFO passbook proof'};
+const now=()=>Date.now(),H=36e5,D=864e5;
+const uid=()=>Math.random().toString(36).slice(2,8);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=t=>t?new Date(t).toLocaleString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'}):'-';
+const inr=n=>Number(n)+(Math.abs(n)===1?' credit':' credits');
+function hashHex(s){let h=[2166136261,2654435761,1597334677,3266489917];for(let i=0;i<s.length;i++)for(let k=0;k<4;k++){h[k]=Math.imul(h[k]^s.charCodeAt(i)+k,16777619+k*2);h[k]^=h[k]>>>13}return h.map(x=>(x>>>0).toString(16).padStart(8,'0')).join('')}
+async function sha(s){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return hashHex(s)+hashHex(s+'x')}}
+function mkC(o){return Object.assign({id:'c_'+uid(),token:uid()+uid(),emp:'abc-corp',name:'',phone:'',step:0,consentAt:null,ip:null,ident:null,proofs:{},sentAt:null,openedAt:null,doneAt:null,billed:false,court:null,created:now()},o)}
+function pf(ids,t){const p={};ids.forEach(i=>p[i]={at:t,hash:hashHex(i+t+'seed')+hashHex(t+i)});return p}
+function seed(){const t=now();const id=(n,ph,t0)=>({name:n,phone:ph,ident:{at:t0,dob:'1995-08-14',via:'DigiLocker'},consentAt:t0-6e4,ip:'103.21.58.'+(10+(ph%90)),step:5});
+const all=['uber','swiggy','epfo','digilocker','linkedin'];
+const cs=[
+mkC({id:'c_demo1',token:'priya',phone:'9876500011',...id('',9876500011,t-3*D),name:'Priya Sharma',proofs:pf(all.slice(0,4),t-3*D+9e5),sentAt:t-4*D,openedAt:t-4*D+36e5,doneAt:t-3*D+12e5,billed:true}),
+mkC({id:'c_demo2',token:'rahul',name:'Rahul Verma',phone:'9876500022',ident:{at:t-2*D,dob:'1992-01-03',via:'Aadhaar OTP'},consentAt:t-2*D,ip:'49.37.12.8',step:4,proofs:pf(['uber','digilocker'],t-2*D+6e5),sentAt:t-3*D,openedAt:t-2*D-1e6,court:{flag:true,note:'1 FIR match, Hyderabad PS (sandbox record)'}}),
+mkC({id:'c_demo3',token:'anita',name:'Anita Desai',phone:'9876500033',step:2,consentAt:null,sentAt:t-D,openedAt:t-5*H}),
+mkC({id:'c_demo4',token:'karthik',name:'Karthik Reddy',phone:'9876500044',sentAt:t-3*H}),
+mkC({id:'c_demo5',token:'mohan',name:'Mohan Das',phone:'9876500055',ident:{at:t-5*H,dob:'1990-11-21',via:'DigiLocker'},consentAt:t-5*H,ip:'152.58.4.9',step:4,proofs:pf(['swiggy'],t-4*H),sentAt:t-D,openedAt:t-6*H}),
+mkC({id:'c_demo6',token:'sneha',emp:'company-b',name:'Sneha Iyer',phone:'9876500066',ident:{at:t-D,dob:'1997-05-30',via:'DigiLocker'},consentAt:t-D,ip:'117.99.2.41',step:5,proofs:pf(['swiggy'],t-D+3e5),sentAt:t-2*D,openedAt:t-2*D+2e5,doneAt:t-D+4e5,billed:true})];
+cs.forEach(c=>{if(c.id==='c_demo1'){c.ident={at:t-3*D,dob:'1995-08-14',via:'DigiLocker'};c.consentAt=t-3*D-6e4;c.ip='103.21.58.41';c.step=5}});
+return{v:1,employers:[
+{slug:'abc-corp',name:'ABC Corp',checks:['identity','court','education','employment'],proofs:['uber','swiggy','epfo','digilocker','linkedin']},
+{slug:'company-b',name:'Company B',checks:['identity','court'],proofs:['swiggy']}],
+candidates:cs,wallet:20,tx:[{t:t-6*D,d:'Credits added (sandbox)',a:22},{t:t-3*D,d:'Verification - Priya Sharma',a:-COST},{t:t-D,d:'Verification - Sneha Iyer',a:-COST}],
+inv:[{no:'SV-2610-001',t:t-6*D,a:22,d:'Credits added'}],sess:{cand:null,admin:false}}}
+let S;function load(){try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}if(!S||S.v!==1){S=seed();save()}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+const emp=s=>S.employers.find(e=>e.slug===s);
+const cand=id=>S.candidates.find(c=>c.id===id);
+const reqProofs=c=>emp(c.emp)?.proofs||[];
+const proofsDone=c=>reqProofs(c).filter(p=>c.proofs[p]).length;
+const isDone=c=>!!c.ident&&proofsDone(c)===reqProofs(c).length;
+function pills(c){const e=emp(c.emp),has=k=>e.checks.includes(k),idv=!!c.ident,px=k=>reqProofs(c).includes(k);const o={};
+o.identity=!has('identity')?'n':idv?'g':(c.openedAt||c.step>0)?'y':'x';
+o.court=!has('court')?'n':!idv?'x':c.court?.flag?'r':'g';
+o.education=!has('education')?'n':c.proofs.digilocker?'g':idv?'y':'x';
+o.employment=!has('employment')?'n':c.proofs.epfo?'g':idv?'y':'x';return o}
+const PC={g:['p-g','Clear'],y:['p-y','In progress'],r:['p-r','Flagged'],x:['p-n','Pending'],n:['p-n','n/a']};
+const pill=k=>`<span class="pill ${PC[k][0]}">${PC[k][1]}</span>`;
+function rank(c){const p=Object.values(pills(c));if(p.includes('r'))return 0;if(!isDone(c)&&(c.sentAt&&!c.openedAt||now()-(c.openedAt||0)>4*H&&!isDone(c)&&c.step<4))return 1;return isDone(c)?3:2}
+function ovStatus(c){const p=Object.values(pills(c));if(p.includes('r'))return['Needs attention','p-r'];if(isDone(c))return['Complete','p-g'];if(!c.sentAt&&!c.openedAt)return['Not sent','p-n'];if(!c.openedAt)return['Link sent','p-y'];return['In progress','p-y']}
+const link=(c)=>location.origin+location.pathname+'#/v/'+c.emp+'/'+c.token;
+const empLink=e=>location.origin+location.pathname+'#/v/'+e.slug;
+function toast(m){const t=document.getElementById('toast');t.innerHTML=`<div class="toast">${esc(m)}</div>`;clearTimeout(toast.t);toast.t=setTimeout(()=>t.innerHTML='',2600)}
+const app=document.getElementById('app');let V={};
+function go(h){location.hash=h}
+function route(){const h=location.hash.replace(/^#\/?/,'').split('/');V.err='';
+ if(h[0]==='v')return candRoute(h[1],h[2]);
+ if(h[0]==='admin')return adminRoute(h.slice(1));
+ home()}
+function home(){app.innerHTML=`<div class="wrap hub"><div class="top"><a class="logo" href="#/">smart<span>verification</span><b>&#10035;</b></a></div>
+<div class="card lime"><h1>Try the full flow</h1><p style="color:var(--mute);margin:6px 0 0">Sandbox demo of the candidate journey and the employer dashboard. Every provider step is simulated.</p></div>
+<div class="card"><h3>1. Candidate view (phone)</h3><p class="hint">Open the employer link as a candidate. Sandbox OTP is always <code>123456</code>.</p>
+<a class="btn" href="#/v/abc-corp">Open demo employer link (ABC Corp, 5 proofs)</a><a class="btn alt" href="#/v/company-b">Company B link (1 proof, same screens)</a></div>
+<div class="card"><h3>2. Employer dashboard (web)</h3><div class="cred">Email: <code>admin@demo.smartverification.in</code><br>Password: <code>Sandbox@2026</code></div><a class="btn" style="margin-top:12px" href="#/admin">Open admin dashboard</a></div>
+<p class="hint center">Sandbox build. Data lives only in this browser. Use "Reset demo" above to start clean.</p><p class="center"><a href="./" class="hint">&larr; smartverification.in</a></p></div>`}
+/* ---------- candidate ---------- */
+function curC(){return S.sess.cand&&cand(S.sess.cand)}
+function candRoute(slug,token){const e=emp(slug);if(!e){app.innerHTML=`<div class="wrap"><div class="card"><h2>Link not valid</h2><p>This verification link is not active. Ask your employer for a new one.</p></div></div>`;return}
+ V.slug=slug;let c=token&&S.candidates.find(x=>x.token===token&&x.emp===slug);
+ if(c){if(S.sess.cand!==c.id){S.sess.cand=c.id;c.openedAt=c.openedAt||now();if(c.step===0)c.step=0;save()}}
+ else{const cc=curC();if(!cc||cc.emp!==slug){S.sess.cand=null}}
+ candView()}
+function stepBar(n){return`<div class="steps">${[1,2,3,4,5].map(i=>`<i class="${i<=n?'on':''}"></i>`).join('')}</div>`}
+function candShell(inner,n){const e=emp(V.slug);return`<div class="wrap"><div class="top"><a class="logo" href="#/">smart<span>verification</span><b>&#10035;</b></a>${n?`<span class="hint">Step ${n} of 5</span>`:''}</div>${n?stepBar(n):''}${inner}<p class="hint center">Secured with zero-knowledge proofs built on Reclaim Protocol</p></div>`}
+function candView(){const e=emp(V.slug),c=curC();const eh=`<div class="emp"><div class="av">${esc(e.name.split(' ').map(w=>w[0]).join('').slice(0,2))}</div><div><b>${esc(e.name)}</b><div class="hint" style="margin:0">Background verification</div></div></div>`;
+ const step=c?c.step:0;
+ if(step===0){app.innerHTML=candShell(`<div class="card lime">${eh}<h1>${esc(e.name)} has asked to verify your background</h1><div class="chips">${e.checks.map(k=>`<span class="chip">${CHK[k]}</span>`).join('')}</div><p style="color:var(--mute);font-size:14px">Takes about 3 minutes. No app to install and nothing to type on this screen.</p><button class="btn" data-act="start">Start</button></div>`,0);return}
+ if(step===1){const ph=c.phone||'';app.innerHTML=candShell(`<div class="card"><h2>Verify your phone</h2><p class="hint">This number becomes your ID. No passwords, ever.</p><label>Mobile number</label><div style="display:flex;gap:8px"><input style="width:64px" value="+91" disabled><input id="ph" inputmode="numeric" maxlength="10" placeholder="10-digit number" value="${esc(ph)}"></div>${V.otpSent?`<label>6-digit OTP</label><input id="otp" inputmode="numeric" maxlength="6" placeholder="------" autofocus><p class="hint">Sandbox OTP: <code>123456</code></p><button class="btn" style="margin-top:14px" data-act="verifyOtp">Verify</button>`:`<button class="btn" style="margin-top:14px" data-act="sendOtp">Send OTP</button>`}<div class="err">${esc(V.err)}</div></div>`,1);return}
+ if(step===2){app.innerHTML=candShell(`<div class="card"><h2>Your consent</h2><p>${esc(e.name)} wants to verify: <b>${e.checks.map(k=>CHK[k].toLowerCase()).join(', ')}</b>. Your data is used only for this check.</p><p class="hint">Under India's DPDP Act you can withdraw consent any time by writing to support. We log the time and IP of your consent.</p><button class="btn" data-act="agree">I Agree</button><button class="btn ghost" style="margin-top:10px" data-act="decline">No thanks</button>${V.declined?`<div class="err">No problem. Nothing was collected. You can close this page.</div>`:''}</div>`,2);return}
+ if(step===3){app.innerHTML=candShell(`<div class="card"><h2>Verify your identity</h2><p class="hint">DigiLocker gives us your name, date of birth and photo in one shot.</p><button class="btn" data-act="dl">Continue with DigiLocker</button><p class="center hint" style="margin:14px 0">or use Aadhaar</p><label>Aadhaar number</label><input id="aad" inputmode="numeric" maxlength="12" placeholder="12-digit Aadhaar number">${V.aadOtp?`<label>OTP sent to Aadhaar-linked mobile</label><input id="aotp" inputmode="numeric" maxlength="6"><p class="hint">Sandbox OTP: <code>123456</code></p><button class="btn" style="margin-top:12px" data-act="aadVerify">Verify</button>`:`<button class="btn alt" style="margin-top:12px" data-act="aadSend">Send OTP</button>`}<div class="err">${esc(V.err)}</div></div>`,3);return}
+ if(step===4){const r=reqProofs(c),d=proofsDone(c);
+ app.innerHTML=candShell(`<div class="card lime"><h2>Your proofs</h2><p class="hint" style="margin-top:0">Tap a row to prove it from the app you already use. Your login never reaches us.</p><b>${d} of ${r.length} proofs complete</b><div class="prog"><i style="width:${r.length?d/r.length*100:100}%"></i></div></div><div class="card" style="padding:6px 20px">${r.map(k=>{const p=PROV[k],done=c.proofs[k];return`<div class="row" data-act="proof" data-k="${k}"><div class="pv" style="background:${p.c}">${p.n[0]}</div><div class="m"><b>${p.n}</b><small>${p.p} &middot; ${p.d}</small></div><span class="st ${done?'dn':'ns'}">${done?'Done':'Not started'}</span></div>`}).join('')}</div>${d===r.length?`<button class="btn" data-act="finish">Submit</button>`:`<p class="hint center">Finish all proofs to submit.</p>`}`,4);return}
+ app.innerHTML=candShell(`<div class="card lime center"><div class="big">&#10003;</div><h1>You're done.</h1><p>${esc(e.name)} will get your report shortly.</p><p class="hint">Court, education and employment checks now run on our side. Nothing more for you to do.</p><button class="btn alt" data-act="again" style="margin-top:12px">Start over as a new candidate</button></div>`,5)}
+function checkDone(c){if(isDone(c)&&!c.doneAt){c.doneAt=now();c.step=5}}
+function finishBill(c){if(isDone(c)&&!c.billed){c.billed=true;c.doneAt=c.doneAt||now();S.wallet-=COST;S.tx.unshift({t:now(),d:'Verification - '+(c.name||c.phone),a:-COST})}}
+/* provider modal */
+async function runProof(k){const c=curC(),p=PROV[k];const m=document.getElementById('modal');
+ const draw=(n,hash)=>{const L=['Opening '+p.n+(n>=1?' ('+p.u.replace('https://','').split('/')[0]+')':'...'),'Signing in on '+p.n+' (sandbox)','Reclaim generates a zero-knowledge proof of: '+p.p.toLowerCase(),'Proof verified'];
+ m.innerHTML=`<div class="modal"><div class="sheet"><div class="emp"><div class="pv" style="background:${p.c}">${p.n[0]}</div><div><b>${p.n}</b><div class="hint" style="margin:0">Proves: ${p.p}</div></div></div>${n<0?`<p class="hint">You'll be taken to ${p.n} (app or web) to sign in. ${p.n} only shares a proof of the fact needed. Sandbox: this simulates a successful Reclaim return.</p><button class="btn" data-act="go" data-k="${k}">Continue to ${p.n}</button><button class="btn ghost" style="margin-top:10px" data-act="close">Cancel</button>`:L.map((t,i)=>`<div class="ln ${i<n?'d':i===n?'on':''}"><u>${i<n?'\u2713':i===n?'\u2022':'\u00b7'}</u>${esc(t)}</div>`).join('')+(hash?`<p class="hint">Proof hash <code>${hash.slice(0,24)}...</code></p><button class="btn" data-act="back">Back to proofs</button>`:'')}</div></div>`};
+ V.draw=draw;draw(-1)}
+async function proofGo(k){const c=curC();V.draw(0);await wait(700);V.draw(1);await wait(800);V.draw(2);await wait(900);const t=now(),h=await sha(c.id+k+t);c.proofs[k]={at:t,hash:h};save();V.draw(4,h)}
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+/* ---------- admin ---------- */
+function adminRoute(p){if(!S.sess.admin){if(p[0]!=='login'){go('/admin/login');return}return login()}
+ if(p[0]==='login'){go('/admin');return}
+ const nav=(k,l)=>`<a class="n ${V.nav===k?'on':''}" href="#/admin${k==='list'?'':'/'+k}">${l}</a>`;
+ let body='';V.nav=p[0]||'list';
+ if(p[0]==='add')body=addView();else if(p[0]==='employers')body=empView();else if(p[0]==='billing')body=billView();else if(p[0]==='c'&&cand(p[1])){V.nav='list';body=reportView(cand(p[1]))}else{V.nav='list';body=listView()}
+ app.innerHTML=`<div class="adm"><div class="side"><a class="logo" href="#/" style="display:block;margin:0 0 14px 6px">smart<span>verification</span><b>&#10035;</b></a>${nav('list','Candidates')}${nav('add','Add candidates')}${nav('employers','Employer config')}${nav('billing','Billing')}<a class="n" href="#/" data-act="logout">Sign out</a></div><div class="main">${body}</div></div>`}
+function login(){app.innerHTML=`<div class="wrap"><div class="top"><a class="logo" href="#/">smart<span>verification</span><b>&#10035;</b></a></div><div class="card lime"><h2>Employer sign in</h2><div class="cred">Sandbox login<br><code>admin@demo.smartverification.in</code><br><code>Sandbox@2026</code></div><label>Email</label><input id="em" value="admin@demo.smartverification.in" autocomplete="off"><label>Password</label><input id="pw" type="password" value="Sandbox@2026" autocomplete="off"><button class="btn" style="margin-top:14px" data-act="login">Sign in</button><div class="err">${esc(V.err)}</div></div></div>`}
+function listView(){const q=(V.q||'').toLowerCase(),f=V.f||'all';let L=S.candidates.filter(c=>(!q||(c.name+c.phone).toLowerCase().includes(q))&&(f==='all'||ovStatus(c)[0]===f)).sort((a,b)=>rank(a)-rank(b)||b.created-a.created);
+ const all=S.candidates,done=all.filter(isDone).length,att=all.filter(c=>rank(c)<2).length;
+ return`<h1>Candidates</h1><div class="kpi"><div class="card"><b>${all.length}</b><span>Total</span></div><div class="card"><b>${done}</b><span>Complete</span></div><div class="card"><b>${att}</b><span>Need attention</span></div><div class="card"><b>${inr(S.wallet)}</b><span>Credits</span></div></div>
+<div class="bar"><input id="q" placeholder="Search name or phone" value="${esc(V.q||'')}"><select id="f">${['all','Needs attention','In progress','Link sent','Not sent','Complete'].map(x=>`<option ${x===f?'selected':''} value="${x}">${x==='all'?'All statuses':x}</option>`).join('')}</select><a class="btn sm" href="#/admin/add">+ Add</a></div>
+<table><tr><th>Candidate</th><th class="hide-s">Phone</th><th>Identity</th><th>Court</th><th>Edu</th><th>Emp</th><th class="hide-s">Funnel</th></tr>${L.map(c=>{const p=pills(c),s=ovStatus(c);return`<tr class="cl" data-act="open" data-id="${c.id}"><td><b>${esc(c.name||'Unnamed')}</b><br><span class="pill ${s[1]}">${s[0]}</span> <small class="hide-s" style="color:var(--mute)">${esc(emp(c.emp).name)}</small></td><td class="hide-s">+91 ${esc(c.phone)}</td><td>${pill(p.identity)}</td><td>${pill(p.court)}</td><td>${pill(p.education)}</td><td>${pill(p.employment)}</td><td class="hide-s" style="font-size:12px;color:var(--mute)">Sent ${fmt(c.sentAt)}<br>Opened ${fmt(c.openedAt)}<br>Done ${fmt(c.doneAt)}</td></tr>`}).join('')||'<tr><td colspan="7">No candidates match.</td></tr>'}</table>`}
+function addView(){const o=V.lastLinks||[];return`<h1>Add candidates</h1><div class="two"><div class="card"><h3>Single add</h3><label>Employer</label><select id="ae">${S.employers.map(e=>`<option value="${e.slug}">${esc(e.name)}</option>`).join('')}</select><label>Name</label><input id="an"><label>Mobile</label><input id="ap" inputmode="numeric" maxlength="10"><button class="btn" style="margin-top:14px" data-act="addOne">Send verification link</button></div>
+<div class="card"><h3>CSV bulk upload</h3><p class="hint">Columns: name, phone. Paste rows or choose a file.</p><textarea id="csv" rows="6" placeholder="name,phone&#10;Asha Rao,9812345670&#10;Vikram Singh,9812345671"></textarea><input type="file" id="csvf" accept=".csv,text/csv" style="margin-top:8px"><button class="btn" style="margin-top:12px" data-act="addCsv">Send verification links</button></div></div><div class="err">${esc(V.err)}</div>
+${o.length?`<div class="card lime"><h3>Links sent (SMS + WhatsApp, simulated)</h3>${o.map(c=>`<div class="res"><div class="m"><b>${esc(c.name)}</b><small>+91 ${esc(c.phone)} &middot; <a href="${esc(link(c))}" target="_blank">open candidate link</a></small></div><span class="pill p-y">Link sent</span></div>`).join('')}</div>`:''}`}
+function empView(){return`<h1>Employer config</h1><p class="hint">The employer's link decides which checks and proof rows candidates see. No per-company screens.</p>${S.employers.map(e=>`<div class="card"><h3>${esc(e.name)}</h3><div class="hint">Checks</div><div class="chips">${Object.keys(CHK).map(k=>`<label style="display:inline-flex;gap:6px;margin:0;font-weight:500"><input type="checkbox" style="width:auto" data-act="cfg" data-e="${e.slug}" data-t="checks" data-k="${k}" ${e.checks.includes(k)?'checked':''}>${CHK[k]}</label>`).join('')}</div><div class="hint">Required proofs (one row each for the candidate)</div><div class="chips">${Object.keys(PROV).map(k=>`<label style="display:inline-flex;gap:6px;margin:0;font-weight:500"><input type="checkbox" style="width:auto" data-act="cfg" data-e="${e.slug}" data-t="proofs" data-k="${k}" ${e.proofs.includes(k)?'checked':''}>${PROV[k].n}</label>`).join('')}</div><div class="hint" style="margin-top:10px">Employer link</div><code>${esc(empLink(e))}</code> <a class="btn sm ghost" href="${esc(empLink(e))}" target="_blank">Open</a></div>`).join('')}`}
+function billView(){const used=S.tx.filter(x=>x.a<0&&now()-x.t<30*D).length;return`<h1>Credits &amp; usage</h1><div class="kpi"><div class="card"><b>${inr(S.wallet)}</b><span>Credit balance</span></div><div class="card"><b>1</b><span>Credit per verification</span></div><div class="card"><b>${used}</b><span>Used this month</span></div></div>
+<div class="card"><h3>Add credits (sandbox, no real payment)</h3><p class="hint">Speak to us to look at our stunning pricing: <a href="mailto:harsha@reclaimprotocol.org">harsha@reclaimprotocol.org</a></p><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px">${[10,25,50].map(a=>`<button class="btn sm" data-act="recharge" data-a="${a}">+ ${inr(a)}</button>`).join('')}</div></div>
+<div class="two"><div class="card"><h3>Usage</h3>${S.tx.slice(0,8).map(x=>`<div class="res"><div class="m">${esc(x.d)}<small>${fmt(x.t)}</small></div><b class="${x.a>0?'ok':''}">${x.a>0?'+':''}${inr(x.a)}</b></div>`).join('')}</div><div class="card"><h3>Invoices</h3>${S.inv.map((v,i)=>`<div class="res"><div class="m">${v.no}<small>${fmt(v.t)} &middot; ${esc(v.d)}</small></div><b>${v.a} cr</b><button class="btn sm ghost" data-act="inv" data-i="${i}">Download</button></div>`).join('')}</div></div>`}
+function reportView(c){const e=emp(c.emp),p=pills(c),s=ovStatus(c);const keys=e.checks;
+ const detail={identity:c.ident?`Verified via ${c.ident.via}`:'Awaiting candidate',court:c.court?.flag?c.court.note:(c.ident?'No records found':'Runs after identity'),education:c.proofs.digilocker?'Degree certificate proven':'Awaiting DigiLocker proof',employment:c.proofs.epfo?'Employment history proven from EPFO passbook':'Awaiting EPFO proof'};
+ const at={identity:c.ident?.at,court:c.ident?c.ident.at+2e5:null,education:c.proofs.digilocker?.at,employment:c.proofs.epfo?.at};
+ const root=hashHex(c.id+JSON.stringify(Object.keys(c.proofs))+(c.ident?.at||0)).slice(0,32)+hashHex(c.token).slice(0,32);
+ return`<div class="noprint"><a href="#/admin">&larr; Candidates</a></div><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;margin:8px 0"><h1 style="margin:0">Verification report</h1><span class="pill ${s[1]}">${s[0]}</span></div><p class="hint">${esc(e.name)} &middot; generated ${fmt(now())}</p>
+<div class="card lime"><div style="display:flex;gap:16px"><div class="photo">${esc((c.name||'?')[0])}</div><div><h2 style="margin-bottom:2px">${esc(c.ident?(c.name||'Verified candidate'):(c.name||'Unnamed'))}</h2><div>+91 ${esc(c.phone)}</div>${c.ident?`<div class="hint">DOB ${c.ident.dob} &middot; ${c.ident.via}</div><div class="hint">Consent ${fmt(c.consentAt)} &middot; IP ${esc(c.ip)}</div>`:'<div class="hint">Identity not verified yet</div>'}</div></div></div>
+<div class="card"><h3>Check results</h3>${keys.map(k=>`<div class="res"><div class="m"><b>${CHK[k]}</b><small>${esc(detail[k])}</small><small>Source: ${SRC[k]} (sandbox) &middot; ${fmt(at[k])}</small></div>${pill(p[k])}</div>`).join('')}</div>
+<div class="card"><h3>Proofs submitted via Reclaim</h3>${reqProofs(c).map(k=>{const x=c.proofs[k];return`<div class="res"><div class="m"><b>${PROV[k].n}</b><small>${PROV[k].p}</small>${x?`<small>${fmt(x.at)} &middot; <code>${x.hash.slice(0,20)}...</code></small>`:''}</div><span class="pill ${x?'p-g':'p-n'}">${x?'Verified':'Pending'}</span></div>`}).join('')}<div class="res"><div class="m"><b>Report proof hash</b><small><code>${root}</code></small></div></div></div>
+<div class="noprint" style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn sm" data-act="pdf">Download PDF</button><button class="btn sm alt" data-act="resend" data-id="${c.id}">Resend link</button><button class="btn sm ghost" data-act="copy" data-id="${c.id}">Copy candidate link</button></div>`}
+/* ---------- events ---------- */
+document.addEventListener('click',async ev=>{const t=ev.target.closest('[data-act]');if(!t)return;const a=t.dataset.act,c=curC(),g=id=>document.getElementById(id);
+ if(a==='reset'){localStorage.removeItem(KEY);S=null;load();location.hash='#/';route();toast('Demo reset');return}
+ if(a==='start'){let cc=c;if(!cc){cc=mkC({emp:V.slug,openedAt:now()});S.candidates.push(cc);S.sess.cand=cc.id}cc.step=1;V.otpSent=false;save();return candView()}
+ if(a==='sendOtp'){const v=g('ph').value.trim();if(!/^[6-9]\d{9}$/.test(v)){V.err='Enter a valid 10-digit mobile number';return candView()}c.phone=v;V.otpSent=true;V.err='';save();return candView()}
+ if(a==='verifyOtp'){if(g('otp').value.trim()!=='123456'){V.err='Wrong OTP. In sandbox use 123456';return candView()}V.otpSent=false;V.err='';c.step=2;save();return candView()}
+ if(a==='agree'){c.consentAt=now();c.ip='103.'+(20+Math.floor(Math.random()*200))+'.'+(1+Math.floor(Math.random()*250))+'.'+(1+Math.floor(Math.random()*250));c.step=3;save();return candView()}
+ if(a==='decline'){V.declined=true;return candView()}
+ if(a==='dl'||a==='aadVerify'||a==='aadSend'){
+  if(a==='aadSend'){if(!/^\d{12}$/.test(g('aad').value.trim())){V.err='Enter your 12-digit Aadhaar number';return candView()}V.aadOtp=true;V.err='';return candView()}
+  if(a==='aadVerify'&&g('aotp').value.trim()!=='123456'){V.err='Wrong OTP. In sandbox use 123456';return candView()}
+  c.ident={at:now(),dob:'1996-04-12',via:a==='dl'?'DigiLocker':'Aadhaar OTP'};if(!c.name)c.name='Ravi Kumar';V.aadOtp=false;V.err='';c.step=4;save();return candView()}
+ if(a==='proof')return runProof(t.dataset.k);
+ if(a==='go')return proofGo(t.dataset.k);
+ if(a==='close'){document.getElementById('modal').innerHTML='';return}
+ if(a==='back'){document.getElementById('modal').innerHTML='';return candView()}
+ if(a==='finish'){c.step=5;c.doneAt=now();finishBill(c);save();return candView()}
+ if(a==='again'){S.sess.cand=null;save();location.hash='#/v/'+V.slug;route();return}
+ if(a==='login'){if(g('em').value.trim().toLowerCase()==='admin@demo.smartverification.in'&&g('pw').value==='Sandbox@2026'){S.sess.admin=true;save();go('/admin')}else{V.err='Wrong sandbox credentials';login()}return}
+ if(a==='logout'){S.sess.admin=false;save();return}
+ if(a==='open')return go('/admin/c/'+t.dataset.id);
+ if(a==='addOne'){const n=g('an').value.trim(),p=g('ap').value.trim();if(!n||!/^[6-9]\d{9}$/.test(p)){V.err='Enter a name and a valid 10-digit mobile';return adminRoute(['add'])}V.err='';V.lastLinks=[addCand(n,p,g('ae').value)];save();toast('Link sent via SMS + WhatsApp (simulated)');return adminRoute(['add'])}
+ if(a==='addCsv'){let txt=g('csv').value;const f=g('csvf').files[0];if(f)txt=await f.text();const rows=txt.split(/\r?\n/).map(l=>l.split(',').map(x=>x.trim())).filter(r=>r[0]&&/^[6-9]\d{9}$/.test(r[1]||''));if(!rows.length){V.err='No valid rows. Use: name,phone (10-digit mobile)';return adminRoute(['add'])}V.err='';V.lastLinks=rows.map(r=>addCand(r[0],r[1],g('ae')?g('ae').value:'abc-corp'));save();toast(rows.length+' links sent (simulated)');return adminRoute(['add'])}
+ if(a==='cfg'){const e=emp(t.dataset.e),arr=e[t.dataset.t],k=t.dataset.k;const i=arr.indexOf(k);if(t.checked&&i<0)arr.push(k);if(!t.checked&&i>=0)arr.splice(i,1);save();toast('Saved');return}
+ if(a==='recharge'){const n=+t.dataset.a;S.wallet+=n;S.tx.unshift({t:now(),d:'Credits added (sandbox)',a:n});S.inv.unshift({no:'SV-2610-'+String(S.inv.length+1).padStart(3,'0'),t:now(),a:n,d:'Credits added'});save();toast('Added '+inr(n));return adminRoute(['billing'])}
+ if(a==='inv'){const v=S.inv[+t.dataset.i];dl('invoice-'+v.no+'.txt',`SmartVerification (sandbox invoice)\nInvoice ${v.no}\nDate ${new Date(v.t).toDateString()}\n${v.d}\nCredits ${v.a}\n`);return}
+ if(a==='pdf')return window.print();
+ if(a==='resend'){const x=cand(t.dataset.id);x.sentAt=now();save();toast('Link resent via WhatsApp (simulated)');return}
+ if(a==='copy'){const x=cand(t.dataset.id);try{await navigator.clipboard.writeText(link(x));toast('Link copied')}catch(e){toast(link(x))}return}});
+document.addEventListener('input',e=>{if(e.target.id==='q'){V.q=e.target.value;const p=e.target.selectionStart;adminRoute([]);const q=document.getElementById('q');q.focus();q.setSelectionRange(p,p)}});
+document.addEventListener('change',e=>{if(e.target.id==='f'){V.f=e.target.value;adminRoute([])}});
+function addCand(n,p,e){const c=mkC({name:n,phone:p,emp:e,sentAt:now()});S.candidates.push(c);return c}
+function dl(name,txt){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([txt]));a.download=name;a.click()}
+window.addEventListener('hashchange',route);load();route();
+</script></body></html>
