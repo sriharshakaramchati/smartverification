@@ -96,15 +96,14 @@ function rank(c){const p=Object.values(pills(c));if(p.includes('r'))return 0;if(
 function ovStatus(c){const p=Object.values(pills(c));if(p.includes('r'))return['Needs attention','p-r'];if(isDone(c))return['Complete','p-g'];if(!c.sentAt&&!c.openedAt)return['Not sent','p-n'];if(!c.openedAt)return['Link sent','p-y'];return['In progress','p-y']}
 const eventMeta=c=>({device:'Android · Chrome (simulated)',ip:c.ip||'203.0.113.42',location:'Hyderabad, India (simulated)'});
 function logEvent(c,type,label,at=now(),reconstructed=false,service=false){c.events=c.events||[];c.events.push({type,label,at,reconstructed,meta:service?{device:'Sandbox service',ip:'192.0.2.10',location:'India · demo region'}:eventMeta(c)});}
-function ensureEvents(c){if(c.events?.length)return;
- c.events=[];
- if(c.sentAt)logEvent(c,'sent','Verification link sent',c.sentAt,true,true);
- if(c.openedAt)logEvent(c,'opened','Candidate opened link',c.openedAt,true);
- if(c.otpAt||c.consentAt||c.step>=2)logEvent(c,'otp','Phone OTP verified',c.otpAt||c.consentAt||c.openedAt||c.created,true);
- if(c.consentAt)logEvent(c,'consent','DPDP consent given',c.consentAt,true);
- if(c.ident)logEvent(c,'identity','Identity verified · '+c.ident.via,c.ident.at,true);
- Object.entries(c.proofs).forEach(([k,x])=>logEvent(c,'proof:'+k,PROV[k].n+' proof submitted',x.at,true));
- if(c.doneAt)logEvent(c,'submitted','Candidate submitted verification',c.doneAt,true);
+function ensureEvents(c){c.events=c.events||[];const add=(type,label,at,service=false)=>{if(!c.events.some(x=>x.type===type))logEvent(c,type,label,at,true,service)};
+ if(c.sentAt)add('sent','Verification link sent',c.sentAt,true);
+ if(c.openedAt)add('opened','Candidate opened link',c.openedAt);
+ if(c.otpAt||c.consentAt||c.step>=2)add('otp','Phone OTP verified',c.otpAt||c.consentAt||c.openedAt||c.created);
+ if(c.consentAt)add('consent','DPDP consent given',c.consentAt);
+ if(c.ident)add('identity','Identity verified · '+c.ident.via,c.ident.at);
+ Object.entries(c.proofs).forEach(([k,x])=>add('proof:'+k,PROV[k].n+' proof submitted',x.at));
+ if(c.doneAt)add('submitted','Candidate submitted verification',c.doneAt);
 }
 function reviewIssues(c){const p=pills(c),items=[];
  if(c.court?.flag&&emp(c.emp).checks.includes('court'))items.push({flag:true,text:'Court match requires manual review. A match is not a confirmed adverse finding.'});
